@@ -1,4 +1,4 @@
 Metaliga
 ========
 
-Meta translation tool for Lig.
+Meta Translation Tool for Lig
