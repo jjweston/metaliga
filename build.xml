@@ -20,11 +20,58 @@ limitations under the License.
 
 <project name="Metaliga" default="usage">
 
+    <property name="dir.base"         value="."                        />
+    <property name="dir.src"          value="${dir.base}/src"          />
+    <property name="dir.src.main"     value="${dir.src}/main"          />
+    <property name="dir.work"         value="${dir.base}/work"         />
+    <property name="dir.classes"      value="${dir.work}/classes"      />
+    <property name="dir.classes.main" value="${dir.classes}/main"      />
+    <property name="dir.jars"         value="${dir.work}/jars"         />
+    <property name="file.jar.main"    value="${dir.jars}/Metaliga.jar" />
+
+    <target name="clean">
+        <delete dir="${dir.work}" />
+    </target>
+
+    <target name="init">
+        <mkdir dir="${dir.work}" />
+    </target>
+
+    <target name="init.jars" depends="init">
+        <mkdir dir="${dir.jars}" />
+    </target>
+
+    <target name="compile.main" depends="init">
+        <mkdir dir="${dir.classes.main}" />
+        <depend srcDir="${dir.src.main}" destDir="${dir.classes.main}" closure="true" />
+        <javac srcdir="${dir.src.main}" destdir="${dir.classes.main}" debug="true"
+               includeantruntime="false" />
+    </target>
+
+    <target name="jar.main" depends="init.jars, compile.main">
+        <jar jarfile="${file.jar.main}" basedir="${dir.classes.main}" />
+    </target>
+
     <target name="usage">
-        <echo message="Metaliga Build Options"                  />
-        <echo message=""                                        />
-        <echo message="usage"                                   />
-        <echo message="    Display the Metaliga build options." />
+        <echo message="Metaliga Build Options"                    />
+        <echo message=""                                          />
+        <echo message="clean"                                     />
+        <echo message="    Remove all generated files."           />
+        <echo message=""                                          />
+        <echo message="init"                                      />
+        <echo message="    Create the work directory."            />
+        <echo message=""                                          />
+        <echo message="init.jars"                                 />
+        <echo message="    Create directory for Jar files."       />
+        <echo message=""                                          />
+        <echo message="compile.main"                              />
+        <echo message="    Compile the Metaliga source code."     />
+        <echo message=""                                          />
+        <echo message="jar.main"                                  />
+        <echo message="    Create a Jar of the Metaliga classes." />
+        <echo message=""                                          />
+        <echo message="usage"                                     />
+        <echo message="    Display the Metaliga build options."   />
     </target>
 
 </project>
